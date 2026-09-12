@@ -1,0 +1,66 @@
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px 20px;
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius);
+  text-align: left;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.action-btn:not(:disabled):hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.action-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+.action-btn--primary:not(:disabled) {
+  border-style: solid;
+  background: var(--color-primary);
+  color: white;
+}
+
+.action-btn-icon {
+  font-size: 24px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.action-btn-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.action-btn-content strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.action-btn-content small {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+.action-btn--primary .action-btn-content small {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.action-btn-tag {
+  font-size: 11px;
+  padding: 3px 8px;
+  background: #f1f5f9;
+  color: var(--color-text-secondary);
+  border-radius: 4px;
+  flex-shrink: 0;
+}

@@ -1,0 +1,82 @@
+.feature-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--card-accent, var(--color-primary));
+  border-radius: 4px 0 0 4px;
+}
+
+.feature-card:hover {
+  border-color: var(--card-accent, var(--color-primary));
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.feature-card-icon {
+  font-size: 36px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.feature-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.feature-card-body h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.feature-card-body p {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.feature-card-stats {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.feature-card-stats .stat {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.feature-card-stats .stat strong {
+  color: var(--card-accent, var(--color-primary));
+  font-weight: 600;
+}
+
+.feature-card-arrow {
+  font-size: 20px;
+  color: var(--color-text-secondary);
+  align-self: center;
+  transition: transform 0.2s;
+}
+
+.feature-card:hover .feature-card-arrow {
+  transform: translateX(4px);
+  color: var(--card-accent, var(--color-primary));
+}
