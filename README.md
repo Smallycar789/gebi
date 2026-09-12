@@ -40,6 +40,9 @@ npm run build
 
 ### 首次启用 GitHub Pages
 
-1. 打开仓库 **Settings → Pages**
-2. **Source** 选择 **GitHub Actions**
-3. 推送代码到 `main` 分支，等待 Actions 工作流完成
+1. 推送代码到 `main` 分支，等待 **Actions** 工作流完成（会自动将 `dist/` 发布到 `gh-pages` 分支）
+2. 打开仓库 **Settings → Pages**
+3. **Build and deployment → Source** 选择 **Deploy from a branch**
+4. **Branch** 选择 `gh-pages`，文件夹选 `/ (root)`，点击 **Save**
+
+> 若页面空白，通常是 Pages 仍指向 `main` 分支的根目录（会加载未编译的 `/src/main.jsx`）。务必切换到 `gh-pages` 分支。
