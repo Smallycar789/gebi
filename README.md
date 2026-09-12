@@ -1,4 +1,4 @@
-# 合居 · 合租生活管家
+# 隔壁 · 合租生活伙伴
 
 专为年轻人合租场景设计的线上管理平台，解决费用分摊、清洁排班、公共物品和室友公约等常见问题。
 
@@ -13,18 +13,30 @@
 
 **GitHub Pages：** https://smallycar789.github.io/gebi/
 
+## 页面路由
+
+| 路径 | 说明 |
+|------|------|
+| `/` | 首页仪表盘（入组天数、备忘录、功能入口） |
+| `/expenses` | 费用分摊列表 |
+| `/expenses/new` | 新增账单 |
+| `/expenses/:id` | 账单详情与分摊明细 |
+| `/cleaning` | 本周排班表 |
+| `/cleaning/checkin` | 值日打卡 |
+| `/items` | 物品清单 |
+| `/items/:id` | 物品详情与消耗记录 |
+| `/agreement` | 公约条款与签署状态 |
+| `/room/settings` | 合租房设置 |
+| `/profile` | 个人中心 |
+
 ## 构建与部署
 
 项目通过 GitHub Actions 自动构建并发布到 GitHub Pages。推送 `main` 分支后会自动部署。
-
-手动构建：
 
 ```bash
 npm install
 npm run build
 ```
-
-构建产物在 `dist/` 目录，可直接用于 GitHub Pages 发布。
 
 ### 首次启用 GitHub Pages
 

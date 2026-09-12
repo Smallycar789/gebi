@@ -15,10 +15,10 @@ export default function Layout() {
       <header className="header">
         <div className="header-inner">
           <NavLink to="/" className="logo">
-            <span className="logo-icon">🏠</span>
+            <span className="logo-icon">🏡</span>
             <span className="logo-text">
-              <strong>合居</strong>
-              <small>合租生活管家</small>
+              <strong>隔壁</strong>
+              <small>合租生活伙伴</small>
             </span>
           </NavLink>
           <nav className="nav">
@@ -33,6 +33,14 @@ export default function Layout() {
               </NavLink>
             ))}
           </nav>
+          <div className="header-actions">
+            <NavLink
+              to="/profile"
+              className={({ isActive }) => `profile-link ${isActive ? 'active' : ''}`}
+            >
+              👤 我的
+            </NavLink>
+          </div>
         </div>
       </header>
 
@@ -41,7 +49,7 @@ export default function Layout() {
       </main>
 
       <footer className="footer">
-        <p>合居 · 让合租生活更清晰、更和谐</p>
+        <p>隔壁 · 让合租生活更清晰、更和谐</p>
       </footer>
     </div>
   )

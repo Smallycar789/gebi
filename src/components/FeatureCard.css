@@ -4,7 +4,7 @@
   gap: 16px;
   padding: 24px;
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   transition: all 0.25s ease;
@@ -18,9 +18,9 @@
   left: 0;
   top: 0;
   bottom: 0;
-  width: 4px;
+  width: 5px;
   background: var(--card-accent, var(--color-primary));
-  border-radius: 4px 0 0 4px;
+  border-radius: 5px 0 0 5px;
 }
 
 .feature-card:hover {
@@ -65,7 +65,7 @@
 }
 
 .feature-card-stats .stat strong {
-  color: var(--card-accent, var(--color-primary));
+  color: var(--card-accent, var(--color-primary-dark));
   font-weight: 600;
 }
 
@@ -78,5 +78,5 @@
 
 .feature-card:hover .feature-card-arrow {
   transform: translateX(4px);
-  color: var(--card-accent, var(--color-primary));
+  color: var(--card-accent, var(--color-primary-dark));
 }

@@ -1,14 +1,10 @@
+import { Link } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import ActionButton from '../components/ActionButton'
+import { bills, roommates, getExpenseSummary } from '../data/mockData'
 import './FeaturePage.css'
 
-const mockBills = [
-  { id: 1, name: '3月房租', amount: 4800, perPerson: 1200, status: 'pending', date: '2026-03-01' },
-  { id: 2, name: '2月水电费', amount: 186, perPerson: 46.5, status: 'settled', date: '2026-02-28' },
-  { id: 3, name: '2月网费', amount: 129, perPerson: 32.25, status: 'settled', date: '2026-02-15' },
-]
-
-const roommates = ['小明', '小红', '小刚', '小丽']
+const { pendingCount, monthTotal, perPerson } = getExpenseSummary()
 
 export default function Expenses() {
   return (
@@ -25,23 +21,27 @@ export default function Expenses() {
           <div className="summary-cards">
             <div className="summary-card">
               <span className="summary-label">本月总支出</span>
-              <strong className="summary-value">¥1,280</strong>
+              <strong className="summary-value">¥{monthTotal.toLocaleString()}</strong>
             </div>
             <div className="summary-card">
               <span className="summary-label">人均应付</span>
-              <strong className="summary-value">¥320</strong>
+              <strong className="summary-value">¥{perPerson.toFixed(2)}</strong>
             </div>
             <div className="summary-card highlight">
               <span className="summary-label">待结算</span>
-              <strong className="summary-value">1 笔</strong>
+              <strong className="summary-value">{pendingCount} 笔</strong>
             </div>
           </div>
 
           <div className="section-block">
             <h2>账单列表</h2>
             <div className="bill-list">
-              {mockBills.map((bill) => (
-                <div key={bill.id} className="bill-item">
+              {bills.map((bill) => (
+                <Link
+                  key={bill.id}
+                  to={`/expenses/${bill.id}`}
+                  className="bill-item bill-item--link"
+                >
                   <div className="bill-info">
                     <strong>{bill.name}</strong>
                     <span className="bill-date">{bill.date}</span>
@@ -53,7 +53,7 @@ export default function Expenses() {
                   <span className={`bill-status bill-status--${bill.status}`}>
                     {bill.status === 'pending' ? '待结算' : '已结清'}
                   </span>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -61,8 +61,8 @@ export default function Expenses() {
           <div className="section-block">
             <h2>分摊成员</h2>
             <div className="member-tags">
-              {roommates.map((name) => (
-                <span key={name} className="member-tag">{name}</span>
+              {roommates.map((rm) => (
+                <span key={rm.id} className="member-tag">{rm.name}</span>
               ))}
             </div>
           </div>
@@ -71,10 +71,10 @@ export default function Expenses() {
         <aside className="feature-sidebar">
           <h3>快捷操作</h3>
           <div className="action-list">
-            <ActionButton icon="➕" label="新增账单" description="录入房租、水电、网费等" />
-            <ActionButton icon="🧮" label="自定义分摊" description="按房间或比例分摊" />
-            <ActionButton icon="📊" label="导出明细" description="导出 Excel 对账表" />
-            <ActionButton icon="🔔" label="催缴提醒" description="向室友发送结算提醒" />
+            <ActionButton icon="➕" label="新增账单" description="录入房租、水电、网费等" to="/expenses/new" variant="primary" />
+            <ActionButton icon="🧮" label="自定义分摊" description="按房间或比例分摊" disabled />
+            <ActionButton icon="📊" label="导出明细" description="导出 Excel 对账表" disabled />
+            <ActionButton icon="🔔" label="催缴提醒" description="向室友发送结算提醒" disabled />
           </div>
         </aside>
       </div>

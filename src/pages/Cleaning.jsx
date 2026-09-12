@@ -1,18 +1,8 @@
+import { Link } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import ActionButton from '../components/ActionButton'
+import { weekSchedule, cleaningAreas, todayDuty } from '../data/mockData'
 import './FeaturePage.css'
-
-const weekSchedule = [
-  { day: '周一', area: '客厅 + 厨房', person: '小明', done: true },
-  { day: '周二', area: '卫生间', person: '小红', done: true },
-  { day: '周三', area: '客厅 + 阳台', person: '小刚', done: false, today: true },
-  { day: '周四', area: '厨房 + 冰箱', person: '小丽', done: false },
-  { day: '周五', area: '卫生间 + 走廊', person: '小明', done: false },
-  { day: '周六', area: '全屋大扫除', person: '全员', done: false },
-  { day: '周日', area: '休息', person: '—', done: false },
-]
-
-const areas = ['客厅', '厨房', '卫生间', '阳台', '走廊']
 
 export default function Cleaning() {
   return (
@@ -29,10 +19,10 @@ export default function Cleaning() {
           <div className="today-duty">
             <div className="today-duty-badge">今日值日</div>
             <div className="today-duty-content">
-              <strong>小刚</strong>
-              <span>负责：客厅 + 阳台</span>
+              <strong>{todayDuty.person}</strong>
+              <span>负责：{todayDuty.area}</span>
             </div>
-            <button className="checkin-btn" disabled title="功能开发中">打卡完成</button>
+            <Link to="/cleaning/checkin" className="checkin-btn">打卡完成</Link>
           </div>
 
           <div className="section-block">
@@ -57,7 +47,7 @@ export default function Cleaning() {
           <div className="section-block">
             <h2>清洁区域</h2>
             <div className="area-tags">
-              {areas.map((area) => (
+              {cleaningAreas.map((area) => (
                 <span key={area} className="area-tag">{area}</span>
               ))}
             </div>
@@ -67,10 +57,10 @@ export default function Cleaning() {
         <aside className="feature-sidebar">
           <h3>快捷操作</h3>
           <div className="action-list">
-            <ActionButton icon="📅" label="调整排班" description="手动修改值日安排" />
-            <ActionButton icon="🔄" label="自动轮换" description="按成员顺序自动排班" />
-            <ActionButton icon="✅" label="值日打卡" description="完成清洁后确认打卡" />
-            <ActionButton icon="📋" label="清洁标准" description="查看各区域清洁要求" />
+            <ActionButton icon="📅" label="调整排班" description="手动修改值日安排" disabled />
+            <ActionButton icon="🔄" label="自动轮换" description="按成员顺序自动排班" disabled />
+            <ActionButton icon="✅" label="值日打卡" description="完成清洁后确认打卡" to="/cleaning/checkin" variant="primary" />
+            <ActionButton icon="📋" label="清洁标准" description="查看各区域清洁要求" disabled />
           </div>
         </aside>
       </div>
