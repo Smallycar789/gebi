@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import BackLink from '../components/BackLink'
 import PageHeader from '../components/PageHeader'
-import { getBillById } from '../data/mockData'
+import { getBillById } from '../data/billsStore'
 import './FeaturePage.css'
 
 export default function ExpenseDetail() {

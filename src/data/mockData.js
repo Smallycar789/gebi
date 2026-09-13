@@ -170,19 +170,8 @@ export const agreementRules = [
   { id: 8, category: '钥匙管理', content: '最后出门者负责锁门，钥匙不得外借非室友人员', votes: 4 },
 ]
 
-export function getBillById(id) {
-  return bills.find((b) => b.id === id)
-}
-
 export function getItemById(id) {
   return items.find((i) => i.id === id)
-}
-
-export function getExpenseSummary() {
-  const pendingCount = bills.filter((b) => b.status === 'pending').length
-  const monthTotal = bills.reduce((sum, b) => sum + b.amount, 0)
-  const perPerson = monthTotal / roommates.length
-  return { pendingCount, monthTotal, perPerson }
 }
 
 export function getItemStatusLabel(status) {

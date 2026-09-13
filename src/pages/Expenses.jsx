@@ -1,19 +1,27 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import ActionButton from '../components/ActionButton'
-import { bills, roommates, getExpenseSummary } from '../data/mockData'
+import { roommates } from '../data/mockData'
+import { getAllBills, getExpenseSummary } from '../data/billsStore'
 import './FeaturePage.css'
 
-const { pendingCount, monthTotal, perPerson } = getExpenseSummary()
-
 export default function Expenses() {
+  const location = useLocation()
+  const bills = getAllBills()
+  const { pendingCount, monthTotal, perPerson } = getExpenseSummary()
+  const justAdded = location.state?.billAdded
+
   return (
     <div className="feature-page">
+      {justAdded && (
+        <p className="toast-success" role="status">
+          账单已添加，列表已更新
+        </p>
+      )}
       <PageHeader
         icon="💰"
         title="费用 AA 分摊"
         subtitle="录入合租期间的各项支出，系统自动按人数均摊，清晰记录每笔费用的分摊明细。"
-        badge="演示数据"
       />
 
       <div className="feature-layout">

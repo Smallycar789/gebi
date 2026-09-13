@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import FeatureCard from '../components/FeatureCard'
 import MemoBoard from '../components/MemoBoard'
-import { group, getExpenseSummary } from '../data/mockData'
+import { group } from '../data/mockData'
+import { getExpenseSummary } from '../data/billsStore'
 import { getDaysSince } from '../utils/date'
 import './Home.css'
 
