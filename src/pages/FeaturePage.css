@@ -678,19 +678,32 @@
   opacity: 0.85;
 }
 
-.photo-upload {
-  display: block;
-  cursor: pointer;
-  margin: 0 auto 16px;
-  max-width: 320px;
-}
-
 .photo-upload-input {
   position: absolute;
   width: 1px;
   height: 1px;
   opacity: 0;
   overflow: hidden;
+  pointer-events: none;
+}
+
+.checkin-photo-area {
+  margin: 0 auto 12px;
+  max-width: 320px;
+}
+
+.checkin-photo-toolbar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.checkin-rest-hint {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: -12px 0 16px;
 }
 
 .checkin-photo-preview {

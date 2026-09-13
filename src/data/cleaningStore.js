@@ -128,13 +128,17 @@ function refreshTodayFlags(weekSchedule, assignments) {
 }
 
 function writeState(state) {
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify({
-      assignments: state.assignments,
-      weekSchedule: state.weekSchedule,
-    })
-  )
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        assignments: state.assignments,
+        weekSchedule: state.weekSchedule,
+      })
+    )
+  } catch {
+    throw new Error('STORAGE_QUOTA')
+  }
 }
 
 export function getCleaningAreas() {
@@ -213,10 +217,6 @@ export function submitCheckin(photoDataUrl) {
   if (!row) {
     return { error: '无法获取今日排班' }
   }
-  if (row.person === '—') {
-    return { error: '今日为休息日，无需打卡' }
-  }
-
   const weekSchedule = state.weekSchedule.map((r) =>
     r.day === todayName
       ? {
@@ -228,10 +228,17 @@ export function submitCheckin(photoDataUrl) {
       : r
   )
 
-  writeState({
-    assignments: state.assignments,
-    weekSchedule,
-  })
+  try {
+    writeState({
+      assignments: state.assignments,
+      weekSchedule,
+    })
+  } catch (err) {
+    if (err.message === 'STORAGE_QUOTA') {
+      return { error: '照片过大，保存失败，请换一张较小的图片后重试' }
+    }
+    return { error: '保存失败，请稍后重试' }
+  }
 
   return {
     success: true,
