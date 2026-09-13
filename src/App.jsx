@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Expenses from './pages/Expenses'
 import ExpenseNew from './pages/ExpenseNew'
 import ExpenseDetail from './pages/ExpenseDetail'
+import ExpenseCustomSplit from './pages/ExpenseCustomSplit'
 import Cleaning from './pages/Cleaning'
 import CleaningCheckin from './pages/CleaningCheckin'
 import CleaningAdjust from './pages/CleaningAdjust'
@@ -26,6 +27,7 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="expenses" element={<Expenses />} />
         <Route path="expenses/new" element={<ExpenseNew />} />
+        <Route path="expenses/split" element={<ExpenseCustomSplit />} />
         <Route path="expenses/:id" element={<ExpenseDetail />} />
         <Route path="cleaning" element={<Cleaning />} />
         <Route path="cleaning/adjust" element={<CleaningAdjust />} />

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import BackLink from '../components/BackLink'
 import PageHeader from '../components/PageHeader'
 import ToggleSwitch from '../components/ToggleSwitch'
-import { getBillById, setSplitPaid } from '../data/billsStore'
+import { getBillById, setSplitPaid, getSplitModeLabel } from '../data/billsStore'
 import './FeaturePage.css'
 
 export default function ExpenseDetail() {
@@ -37,7 +37,7 @@ export default function ExpenseDetail() {
       <PageHeader
         icon="💰"
         title={bill.name}
-        subtitle={`${bill.type} · ${bill.date} · 总计 ¥${bill.amount}`}
+        subtitle={`${bill.type} · ${bill.date} · 总计 ¥${bill.amount} · ${getSplitModeLabel(bill.splitMode)}`}
         badge={bill.status === 'pending' ? '待结算' : '已结清'}
       />
 
@@ -48,7 +48,9 @@ export default function ExpenseDetail() {
             <strong className="summary-value">¥{bill.amount}</strong>
           </div>
           <div className="summary-card">
-            <span className="summary-label">人均应付</span>
+            <span className="summary-label">
+              {bill.splitMode !== 'equal' ? '参考人均' : '人均应付'}
+            </span>
             <strong className="summary-value">¥{bill.perPerson}</strong>
           </div>
           <div className={`summary-card ${bill.status === 'pending' ? 'highlight' : ''}`}>

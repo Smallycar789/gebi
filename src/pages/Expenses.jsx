@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import ActionButton from '../components/ActionButton'
 import { roommates } from '../data/mockData'
-import { getAllBills, getExpenseSummary } from '../data/billsStore'
+import { getAllBills, getExpenseSummary, getSplitModeLabel } from '../data/billsStore'
 import './FeaturePage.css'
 
 export default function Expenses() {
@@ -10,12 +10,18 @@ export default function Expenses() {
   const bills = getAllBills()
   const { pendingCount, monthTotal, perPerson } = getExpenseSummary()
   const justAdded = location.state?.billAdded
+  const splitUpdated = location.state?.splitUpdated
 
   return (
     <div className="feature-page">
       {justAdded && (
         <p className="toast-success" role="status">
           账单已添加，列表已更新
+        </p>
+      )}
+      {splitUpdated && (
+        <p className="toast-success" role="status">
+          自定义分摊已保存，账单明细已更新
         </p>
       )}
       <PageHeader
@@ -52,11 +58,18 @@ export default function Expenses() {
                 >
                   <div className="bill-info">
                     <strong>{bill.name}</strong>
-                    <span className="bill-date">{bill.date}</span>
+                    <span className="bill-date">
+                      {bill.date}
+                      {bill.splitMode && bill.splitMode !== 'equal' && (
+                        <> · {getSplitModeLabel(bill.splitMode)}</>
+                      )}
+                    </span>
                   </div>
                   <div className="bill-amount">
                     <span>总计 ¥{bill.amount}</span>
-                    <span className="per-person">人均 ¥{bill.perPerson}</span>
+                    <span className="per-person">
+                      {bill.splitMode !== 'equal' ? '参考人均' : '人均'} ¥{bill.perPerson}
+                    </span>
                   </div>
                   <span className={`bill-status bill-status--${bill.status}`}>
                     {bill.status === 'pending' ? '待结算' : '已结清'}
@@ -80,7 +93,7 @@ export default function Expenses() {
           <h3>快捷操作</h3>
           <div className="action-list">
             <ActionButton icon="➕" label="新增账单" description="录入房租、水电、网费等" to="/expenses/new" variant="primary" />
-            <ActionButton icon="🧮" label="自定义分摊" description="按房间或比例分摊" disabled />
+            <ActionButton icon="🧮" label="自定义分摊" description="按金额或比例分摊" to="/expenses/split" />
             <ActionButton icon="📊" label="导出明细" description="导出 Excel 对账表" disabled />
             <ActionButton icon="🔔" label="催缴提醒" description="向室友发送结算提醒" disabled />
           </div>
