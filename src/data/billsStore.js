@@ -58,3 +58,27 @@ export function getExpenseSummary() {
   const perPerson = roommates.length ? monthTotal / roommates.length : 0
   return { pendingCount, monthTotal, perPerson }
 }
+
+function deriveBillStatus(splits) {
+  return splits.every((s) => s.paid) ? 'settled' : 'pending'
+}
+
+export function setSplitPaid(billId, memberName, paid) {
+  const bills = readBills()
+  const index = bills.findIndex((b) => b.id === billId)
+  if (index === -1) return null
+
+  const splits = bills[index].splits.map((s) =>
+    s.name === memberName ? { ...s, paid } : s
+  )
+
+  const updated = {
+    ...bills[index],
+    splits,
+    status: deriveBillStatus(splits),
+  }
+
+  bills[index] = updated
+  writeBills(bills)
+  return updated
+}

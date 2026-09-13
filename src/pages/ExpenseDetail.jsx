@@ -1,12 +1,18 @@
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import BackLink from '../components/BackLink'
 import PageHeader from '../components/PageHeader'
-import { getBillById } from '../data/billsStore'
+import ToggleSwitch from '../components/ToggleSwitch'
+import { getBillById, setSplitPaid } from '../data/billsStore'
 import './FeaturePage.css'
 
 export default function ExpenseDetail() {
   const { id } = useParams()
-  const bill = getBillById(id)
+  const [bill, setBill] = useState(() => getBillById(id))
+
+  useEffect(() => {
+    setBill(getBillById(id))
+  }, [id])
 
   if (!bill) {
     return (
@@ -18,6 +24,11 @@ export default function ExpenseDetail() {
         </div>
       </div>
     )
+  }
+
+  function handlePaidChange(memberName, paid) {
+    const updated = setSplitPaid(id, memberName, paid)
+    if (updated) setBill(updated)
   }
 
   return (
@@ -50,14 +61,24 @@ export default function ExpenseDetail() {
 
         <div className="detail-card">
           <h2>分摊明细</h2>
+          <p className="split-hint">滑动开关标记每位室友是否已付款；全员已付后账单自动变为已结清。</p>
           <div className="split-table">
             {bill.splits.map((split) => (
               <div key={split.name} className={`split-row ${split.paid ? 'paid' : ''}`}>
-                <span>{split.name}</span>
-                <span>¥{split.amount}</span>
-                <span className={`split-status split-status--${split.paid ? 'paid' : 'unpaid'}`}>
-                  {split.paid ? '已付款' : '待付款'}
-                </span>
+                <div className="split-row-info">
+                  <span className="split-name">{split.name}</span>
+                  <span className="split-amount">¥{split.amount}</span>
+                </div>
+                <div className="split-row-actions">
+                  <span className={`split-status split-status--${split.paid ? 'paid' : 'unpaid'}`}>
+                    {split.paid ? '已付款' : '待付款'}
+                  </span>
+                  <ToggleSwitch
+                    checked={split.paid}
+                    onChange={(paid) => handlePaidChange(split.name, paid)}
+                    label={`${split.name} ${split.paid ? '已付款' : '待付款'}`}
+                  />
+                </div>
               </div>
             ))}
           </div>
