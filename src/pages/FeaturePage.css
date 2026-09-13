@@ -250,6 +250,15 @@
   box-shadow: var(--shadow-sm);
 }
 
+.checkin-btn--done {
+  background: linear-gradient(135deg, #94a3b8, #64748b);
+}
+
+.today-duty--done {
+  border-color: #64748b;
+  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+}
+
 .schedule-table {
   display: flex;
   flex-direction: column;
@@ -577,15 +586,73 @@
   width: 100%;
   max-width: 320px;
   height: 180px;
-  margin: 0 auto 24px;
+  margin: 0 auto;
   background: var(--color-surface);
   border: 2px dashed var(--color-border);
   border-radius: var(--radius-lg);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   color: var(--color-text-secondary);
   font-size: 14px;
+}
+
+.photo-placeholder small {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.photo-upload {
+  display: block;
+  cursor: pointer;
+  margin: 0 auto 16px;
+  max-width: 320px;
+}
+
+.photo-upload-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.checkin-photo-preview {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  max-height: 240px;
+  margin: 0 auto 16px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.checkin-success-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #047857;
+  margin-bottom: 8px;
+}
+
+.checkin-time {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+}
+
+.checkin-error {
+  max-width: 320px;
+  margin: 0 auto 16px;
+  text-align: left;
+}
+
+.checkin-actions {
+  justify-content: center;
+  margin-top: 8px;
 }
 
 .settings-card {

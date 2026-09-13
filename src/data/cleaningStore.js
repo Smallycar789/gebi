@@ -26,20 +26,36 @@ function getTodayDayName() {
   return DAY_NAMES[new Date().getDay()]
 }
 
+function prevRowMeta(previousSchedule) {
+  return Object.fromEntries(
+    previousSchedule.map((row) => [
+      row.day,
+      {
+        done: row.done,
+        checkinPhoto: row.checkinPhoto,
+        checkedInAt: row.checkedInAt,
+      },
+    ])
+  )
+}
+
 function buildWeekSchedule(assignments, previousSchedule = []) {
   const names = roommates.map((r) => r.name)
-  const prevDone = Object.fromEntries(previousSchedule.map((row) => [row.day, row.done]))
+  const prev = prevRowMeta(previousSchedule)
   const todayName = getTodayDayName()
 
   const workDays = ['周一', '周二', '周三', '周四', '周五']
   const rows = workDays.map((day, index) => {
     const person = names[index % names.length]
     const area = areasToLabel(assignments[person] || [])
+    const meta = prev[day] || {}
     return {
       day,
       area,
       person,
-      done: prevDone[day] ?? false,
+      done: meta.done ?? false,
+      checkinPhoto: meta.checkinPhoto,
+      checkedInAt: meta.checkedInAt,
       today: day === todayName,
     }
   })
@@ -48,7 +64,9 @@ function buildWeekSchedule(assignments, previousSchedule = []) {
     day: '周六',
     area: '全屋大扫除',
     person: '全员',
-    done: prevDone['周六'] ?? false,
+    done: prev['周六']?.done ?? false,
+    checkinPhoto: prev['周六']?.checkinPhoto,
+    checkedInAt: prev['周六']?.checkedInAt,
     today: todayName === '周六',
   })
 
@@ -56,7 +74,9 @@ function buildWeekSchedule(assignments, previousSchedule = []) {
     day: '周日',
     area: '休息',
     person: '—',
-    done: prevDone['周日'] ?? false,
+    done: prev['周日']?.done ?? false,
+    checkinPhoto: prev['周日']?.checkinPhoto,
+    checkedInAt: prev['周日']?.checkedInAt,
     today: todayName === '周日',
   })
 
@@ -158,6 +178,65 @@ export function saveAssignments(assignments) {
 
   writeState({ assignments, weekSchedule })
   return { assignments, weekSchedule, todayDuty }
+}
+
+export function getTodayScheduleRow() {
+  const todayName = getTodayDayName()
+  return readState().weekSchedule.find((row) => row.day === todayName) ?? null
+}
+
+export function isTodayCheckedIn() {
+  const row = getTodayScheduleRow()
+  return Boolean(row?.done && row?.checkinPhoto)
+}
+
+export function getTodayCheckin() {
+  const row = getTodayScheduleRow()
+  if (!row?.done || !row.checkinPhoto) return null
+  return {
+    person: row.person,
+    area: row.area,
+    photo: row.checkinPhoto,
+    checkedInAt: row.checkedInAt,
+  }
+}
+
+export function submitCheckin(photoDataUrl) {
+  if (!photoDataUrl) {
+    return { error: '请上传打卡照片' }
+  }
+
+  const state = readState()
+  const todayName = getTodayDayName()
+  const row = state.weekSchedule.find((r) => r.day === todayName)
+
+  if (!row) {
+    return { error: '无法获取今日排班' }
+  }
+  if (row.person === '—') {
+    return { error: '今日为休息日，无需打卡' }
+  }
+
+  const weekSchedule = state.weekSchedule.map((r) =>
+    r.day === todayName
+      ? {
+          ...r,
+          done: true,
+          checkinPhoto: photoDataUrl,
+          checkedInAt: new Date().toISOString(),
+        }
+      : r
+  )
+
+  writeState({
+    assignments: state.assignments,
+    weekSchedule,
+  })
+
+  return {
+    success: true,
+    checkin: getTodayCheckin(),
+  }
 }
 
 export { roommates }

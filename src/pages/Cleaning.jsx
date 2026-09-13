@@ -1,7 +1,12 @@
 import { Link, useLocation } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import ActionButton from '../components/ActionButton'
-import { getWeekSchedule, getTodayDuty, getCleaningAreas } from '../data/cleaningStore'
+import {
+  getWeekSchedule,
+  getTodayDuty,
+  getCleaningAreas,
+  isTodayCheckedIn,
+} from '../data/cleaningStore'
 import './FeaturePage.css'
 
 export default function Cleaning() {
@@ -10,11 +15,16 @@ export default function Cleaning() {
   const todayDuty = getTodayDuty()
   const cleaningAreas = getCleaningAreas()
   const scheduleUpdated = location.state?.scheduleUpdated
+  const checkinSuccess = location.state?.checkinSuccess
+  const todayCheckedIn = isTodayCheckedIn()
 
   return (
     <div className="feature-page">
       {scheduleUpdated && (
         <p className="toast-success" role="status">排班已更新，本周值日表已刷新</p>
+      )}
+      {checkinSuccess && (
+        <p className="toast-success" role="status">打卡成功，今日值日已标记为已完成</p>
       )}
       <PageHeader
         icon="🧹"
@@ -24,13 +34,21 @@ export default function Cleaning() {
 
       <div className="feature-layout">
         <section className="feature-main">
-          <div className="today-duty">
-            <div className="today-duty-badge">今日值日</div>
+          <div className={`today-duty ${todayCheckedIn ? 'today-duty--done' : ''}`}>
+            <div className="today-duty-badge">
+              {todayCheckedIn ? '已打卡' : '今日值日'}
+            </div>
             <div className="today-duty-content">
               <strong>{todayDuty.person}</strong>
               <span>负责：{todayDuty.area}</span>
             </div>
-            <Link to="/cleaning/checkin" className="checkin-btn">打卡完成</Link>
+            {todayCheckedIn ? (
+              <Link to="/cleaning/checkin" className="checkin-btn checkin-btn--done">
+                查看打卡
+              </Link>
+            ) : (
+              <Link to="/cleaning/checkin" className="checkin-btn">打卡完成</Link>
+            )}
           </div>
 
           <div className="section-block">
