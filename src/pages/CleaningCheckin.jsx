@@ -1,10 +1,12 @@
 import BackLink from '../components/BackLink'
 import Button from '../components/Button'
 import PageHeader from '../components/PageHeader'
-import { todayDuty } from '../data/mockData'
+import { getTodayDuty } from '../data/cleaningStore'
 import './FeaturePage.css'
 
 export default function CleaningCheckin() {
+  const todayDuty = getTodayDuty()
+
   return (
     <div className="feature-page">
       <BackLink to="/cleaning" />

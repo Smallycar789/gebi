@@ -6,6 +6,7 @@ import ExpenseNew from './pages/ExpenseNew'
 import ExpenseDetail from './pages/ExpenseDetail'
 import Cleaning from './pages/Cleaning'
 import CleaningCheckin from './pages/CleaningCheckin'
+import CleaningAdjust from './pages/CleaningAdjust'
 import Items from './pages/Items'
 import ItemNew from './pages/ItemNew'
 import ItemConsume from './pages/ItemConsume'
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="expenses/new" element={<ExpenseNew />} />
         <Route path="expenses/:id" element={<ExpenseDetail />} />
         <Route path="cleaning" element={<Cleaning />} />
+        <Route path="cleaning/adjust" element={<CleaningAdjust />} />
         <Route path="cleaning/checkin" element={<CleaningCheckin />} />
         <Route path="items" element={<Items />} />
         <Route path="items/new" element={<ItemNew />} />

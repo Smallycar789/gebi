@@ -1,0 +1,113 @@
+.cleaning-adjust .adjust-pool {
+  margin-bottom: 24px;
+  padding: 20px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.cleaning-adjust .adjust-pool h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.adjust-hint {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.adjust-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 24px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.adjust-table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+}
+
+.adjust-table th {
+  padding: 14px 12px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.adjust-table td {
+  vertical-align: top;
+  padding: 12px;
+  border-right: 1px solid var(--color-border);
+  width: 25%;
+}
+
+.adjust-table td:last-child {
+  border-right: none;
+}
+
+.adjust-drop-zone {
+  min-height: 120px;
+  padding: 10px;
+  border-radius: var(--radius);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-content: flex-start;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.adjust-drop-zone--pool {
+  background: var(--color-bg);
+  border: 2px dashed var(--color-border);
+}
+
+.adjust-drop-zone--column {
+  background: var(--color-bg);
+  border: 2px dashed #cbd5e1;
+  min-height: 160px;
+}
+
+.adjust-drop-zone--column:hover,
+.adjust-drop-zone--pool:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.area-slider {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: white;
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-pill);
+  cursor: grab;
+  user-select: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.area-slider:active {
+  cursor: grabbing;
+  opacity: 0.85;
+}
+
+.adjust-empty {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  align-self: center;
+}
+
+.adjust-actions {
+  max-width: 560px;
+}

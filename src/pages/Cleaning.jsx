@@ -1,17 +1,25 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import ActionButton from '../components/ActionButton'
-import { weekSchedule, cleaningAreas, todayDuty } from '../data/mockData'
+import { getWeekSchedule, getTodayDuty, getCleaningAreas } from '../data/cleaningStore'
 import './FeaturePage.css'
 
 export default function Cleaning() {
+  const location = useLocation()
+  const weekSchedule = getWeekSchedule()
+  const todayDuty = getTodayDuty()
+  const cleaningAreas = getCleaningAreas()
+  const scheduleUpdated = location.state?.scheduleUpdated
+
   return (
     <div className="feature-page">
+      {scheduleUpdated && (
+        <p className="toast-success" role="status">排班已更新，本周值日表已刷新</p>
+      )}
       <PageHeader
         icon="🧹"
         title="清洁值日排班"
         subtitle="公共区域清洁任务按周自动轮换，今日值日一目了然，完成后可打卡确认。"
-        badge="演示数据"
       />
 
       <div className="feature-layout">
@@ -57,9 +65,15 @@ export default function Cleaning() {
         <aside className="feature-sidebar">
           <h3>快捷操作</h3>
           <div className="action-list">
-            <ActionButton icon="📅" label="调整排班" description="手动修改值日安排" disabled />
+            <ActionButton
+              icon="📅"
+              label="调整排班"
+              description="手动修改值日安排"
+              to="/cleaning/adjust"
+              variant="primary"
+            />
             <ActionButton icon="🔄" label="自动轮换" description="按成员顺序自动排班" disabled />
-            <ActionButton icon="✅" label="值日打卡" description="完成清洁后确认打卡" to="/cleaning/checkin" variant="primary" />
+            <ActionButton icon="✅" label="值日打卡" description="完成清洁后确认打卡" to="/cleaning/checkin" />
             <ActionButton icon="📋" label="清洁标准" description="查看各区域清洁要求" disabled />
           </div>
         </aside>
