@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import BackLink from '../components/BackLink'
 import Button from '../components/Button'
 import PageHeader from '../components/PageHeader'
-import { addBill } from '../data/billsStore'
+import ExpenseSplitEditor, { defaultSplitValues } from '../components/ExpenseSplitEditor'
+import { addBill, roommates } from '../data/billsStore'
 import './FeaturePage.css'
 
 function todayInputValue() {
@@ -14,14 +15,44 @@ function todayInputValue() {
   return `${y}-${m}-${day}`
 }
 
+function buildSplitPayload(mode, values) {
+  if (mode === 'equal') {
+    return { mode: 'equal', values: {} }
+  }
+  return {
+    mode,
+    values: Object.fromEntries(
+      roommates.map((rm) => [rm.name, Number(values[rm.name] || 0)])
+    ),
+  }
+}
+
 export default function ExpenseNew() {
   const navigate = useNavigate()
   const [name, setName] = useState('')
   const [type, setType] = useState('水电')
   const [amount, setAmount] = useState('')
   const [date, setDate] = useState(todayInputValue())
+  const [splitMode, setSplitMode] = useState('equal')
+  const [splitValues, setSplitValues] = useState({})
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
+
+  function handleModeChange(nextMode) {
+    setSplitMode(nextMode)
+    const total = Number(amount)
+    setSplitValues(defaultSplitValues(nextMode, total))
+  }
+
+  function handleAmountChange(value) {
+    setAmount(value)
+    if (splitMode === 'amount') {
+      const total = Number(value)
+      if (total > 0) {
+        setSplitValues(defaultSplitValues('amount', total))
+      }
+    }
+  }
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -44,7 +75,20 @@ export default function ExpenseNew() {
     }
 
     setSubmitting(true)
-    addBill({ name: trimmedName, type, amount: numAmount, date })
+    const result = addBill({
+      name: trimmedName,
+      type,
+      amount: numAmount,
+      date,
+      split: buildSplitPayload(splitMode, splitValues),
+    })
+
+    if (result?.error) {
+      setError(result.error)
+      setSubmitting(false)
+      return
+    }
+
     navigate('/expenses', { state: { billAdded: true } })
   }
 
@@ -54,7 +98,7 @@ export default function ExpenseNew() {
       <PageHeader
         icon="➕"
         title="新增账单"
-        subtitle="录入房租、水电、网费等合租支出，提交后将自动按人数 AA 分摊并出现在账单列表。"
+        subtitle="录入账单信息并选择分摊方式，提交后出现在账单列表。"
       />
 
       <form className="form-card" onSubmit={handleSubmit} noValidate>
@@ -94,7 +138,7 @@ export default function ExpenseNew() {
             step="0.01"
             placeholder="0.00"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => handleAmountChange(e.target.value)}
             required
           />
         </div>
@@ -108,6 +152,15 @@ export default function ExpenseNew() {
             required
           />
         </div>
+
+        <ExpenseSplitEditor
+          mode={splitMode}
+          onModeChange={handleModeChange}
+          values={splitValues}
+          onValuesChange={setSplitValues}
+          totalAmount={amount}
+        />
+
         <div className="form-actions">
           <Button type="submit" disabled={submitting}>
             {submitting ? '提交中…' : '提交账单'}

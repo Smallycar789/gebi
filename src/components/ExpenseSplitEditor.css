@@ -1,0 +1,21 @@
+.expense-split-editor {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 2px dashed var(--color-border);
+}
+
+.expense-split-editor--compact {
+  margin-top: 16px;
+  padding-top: 16px;
+}
+
+.expense-split-editor-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.split-mode-label-hint {
+  margin-top: 12px;
+  margin-bottom: 0;
+}

@@ -10,8 +10,6 @@ export default function Expenses() {
   const bills = getAllBills()
   const { pendingCount, monthTotal, perPerson } = getExpenseSummary()
   const justAdded = location.state?.billAdded
-  const splitUpdated = location.state?.splitUpdated
-
   return (
     <div className="feature-page">
       {justAdded && (
@@ -19,15 +17,10 @@ export default function Expenses() {
           账单已添加，列表已更新
         </p>
       )}
-      {splitUpdated && (
-        <p className="toast-success" role="status">
-          自定义分摊已保存，账单明细已更新
-        </p>
-      )}
       <PageHeader
         icon="💰"
         title="费用 AA 分摊"
-        subtitle="录入合租期间的各项支出，系统自动按人数均摊，清晰记录每笔费用的分摊明细。"
+        subtitle="录入合租支出，新增时可选择分摊方式；点击账单查看明细与付款状态。"
       />
 
       <div className="feature-layout">
@@ -92,8 +85,7 @@ export default function Expenses() {
         <aside className="feature-sidebar">
           <h3>快捷操作</h3>
           <div className="action-list">
-            <ActionButton icon="➕" label="新增账单" description="录入房租、水电、网费等" to="/expenses/new" variant="primary" />
-            <ActionButton icon="🧮" label="自定义分摊" description="按金额或比例分摊" to="/expenses/split" />
+            <ActionButton icon="➕" label="新增账单" description="录入账单并设置分摊方式" to="/expenses/new" variant="primary" />
             <ActionButton icon="📊" label="导出明细" description="导出 Excel 对账表" disabled />
             <ActionButton icon="🔔" label="催缴提醒" description="向室友发送结算提醒" disabled />
           </div>

@@ -103,7 +103,7 @@ export function getBillById(id) {
   return bill ? normalizeBill(bill) : undefined
 }
 
-export function addBill({ name, type, amount, date }) {
+export function addBill({ name, type, amount, date, split }) {
   const bills = readBills()
   const total = Number(amount)
   const splits = buildEqualSplits(total)
@@ -122,7 +122,39 @@ export function addBill({ name, type, amount, date }) {
   }
 
   writeBills([newBill, ...bills])
+
+  if (split?.mode && split.mode !== 'equal') {
+    const applied = applyCustomSplit(newBill.id, {
+      mode: split.mode,
+      values: split.values || {},
+    })
+    if (applied.error) return applied
+    return applied.bill
+  }
+
   return newBill
+}
+
+export function updateBillDetails(billId, { name, split }) {
+  const bills = readBills()
+  const index = bills.findIndex((b) => b.id === String(billId))
+  if (index === -1) return { error: '账单不存在' }
+
+  if (name !== undefined) {
+    const trimmed = name.trim()
+    if (!trimmed) return { error: '请填写账单名称' }
+    bills[index] = { ...bills[index], name: trimmed }
+    writeBills(bills)
+  }
+
+  if (split) {
+    return applyCustomSplit(billId, {
+      mode: split.mode,
+      values: split.mode === 'equal' ? {} : split.values || {},
+    })
+  }
+
+  return { bill: getBillById(billId) }
 }
 
 export function applyCustomSplit(billId, { mode, values }) {

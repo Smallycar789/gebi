@@ -28,6 +28,7 @@ export default function App() {
         <Route path="expenses" element={<Expenses />} />
         <Route path="expenses/new" element={<ExpenseNew />} />
         <Route path="expenses/split" element={<ExpenseCustomSplit />} />
+        <Route path="expenses/split/:id" element={<ExpenseCustomSplit />} />
         <Route path="expenses/:id" element={<ExpenseDetail />} />
         <Route path="cleaning" element={<Cleaning />} />
         <Route path="cleaning/adjust" element={<CleaningAdjust />} />
