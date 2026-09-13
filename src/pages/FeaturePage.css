@@ -336,6 +336,80 @@
   color: var(--color-text-secondary);
 }
 
+.rule-pending-badge {
+  color: #b45309;
+  font-weight: 500;
+}
+
+.rule-item--vote .vote-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.sign-preview .sign-meta {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+}
+
+.sign-warn {
+  color: #b45309;
+}
+
+.sign-rule-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.sign-rule-list li {
+  padding: 12px 14px;
+  background: var(--color-bg);
+  border-radius: var(--radius);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.sign-rule-list strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #7c3aed;
+  font-size: 12px;
+}
+
+.sign-rule-list span {
+  color: var(--color-text);
+}
+
+.sign-pending-tag {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 11px;
+  color: #b45309;
+  font-style: normal;
+}
+
+.sign-confirm {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.sign-confirm input {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
 .sign-list {
   display: flex;
   flex-direction: column;

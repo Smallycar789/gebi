@@ -12,6 +12,10 @@ import ItemNew from './pages/ItemNew'
 import ItemConsume from './pages/ItemConsume'
 import ItemDetail from './pages/ItemDetail'
 import Agreement from './pages/Agreement'
+import AgreementRuleNew from './pages/AgreementRuleNew'
+import AgreementRuleEdit from './pages/AgreementRuleEdit'
+import AgreementVote from './pages/AgreementVote'
+import AgreementSign from './pages/AgreementSign'
 import RoomSettings from './pages/RoomSettings'
 import Profile from './pages/Profile'
 
@@ -31,6 +35,10 @@ export default function App() {
         <Route path="items/consume" element={<ItemConsume />} />
         <Route path="items/:id" element={<ItemDetail />} />
         <Route path="agreement" element={<Agreement />} />
+        <Route path="agreement/new" element={<AgreementRuleNew />} />
+        <Route path="agreement/edit" element={<AgreementRuleEdit />} />
+        <Route path="agreement/vote" element={<AgreementVote />} />
+        <Route path="agreement/sign" element={<AgreementSign />} />
         <Route path="room/settings" element={<RoomSettings />} />
         <Route path="profile" element={<Profile />} />
       </Route>
