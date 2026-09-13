@@ -7,7 +7,7 @@ import {
   getRules,
   getSignatures,
   signAgreement,
-  currentUser,
+  getCurrentUser,
   getAgreementSummary,
   roommates,
 } from '../data/agreementStore'
@@ -18,7 +18,7 @@ export default function AgreementSign() {
   const rules = getRules()
   const signatures = getSignatures()
   const { signedCount, totalMembers } = getAgreementSummary()
-  const [signerId, setSignerId] = useState(currentUser.id)
+  const [signerId, setSignerId] = useState(() => getCurrentUser().id)
   const me = signatures.find((s) => s.id === signerId)
   const [confirmed, setConfirmed] = useState(false)
   const [error, setError] = useState('')

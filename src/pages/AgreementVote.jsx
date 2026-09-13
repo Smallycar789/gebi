@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import BackLink from '../components/BackLink'
 import Button from '../components/Button'
 import PageHeader from '../components/PageHeader'
-import { getRules, voteAgree, currentUser, roommates } from '../data/agreementStore'
+import { getRules, voteAgree, getCurrentUser, roommates } from '../data/agreementStore'
 import './FeaturePage.css'
 
 export default function AgreementVote() {
   const navigate = useNavigate()
   const [rules, setRules] = useState(() => getRules())
-  const [voterId, setVoterId] = useState(currentUser.id)
+  const user = getCurrentUser()
+  const [voterId, setVoterId] = useState(user.id)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
@@ -42,7 +43,7 @@ export default function AgreementVote() {
       <PageHeader
         icon="🗳️"
         title="发起投票"
-        subtitle={`对公约条款进行表决。当前账号：${currentUser.name}。全员同意后条款生效。`}
+        subtitle={`对公约条款进行表决。当前账号：${user.name}。全员同意后条款生效。`}
       />
 
       {message && <p className="toast-success" role="status">{message}</p>}

@@ -6,7 +6,7 @@ import PageHeader from '../components/PageHeader'
 import {
   getAllItems,
   recordConsumption,
-  currentUser,
+  getCurrentUser,
   roommates,
 } from '../data/itemsStore'
 import './FeaturePage.css'
@@ -16,7 +16,7 @@ export default function ItemConsume() {
   const items = getAllItems()
   const [itemId, setItemId] = useState(items[0]?.id ?? '')
   const [amount, setAmount] = useState('1')
-  const [user, setUser] = useState(currentUser.name)
+  const [user, setUser] = useState(() => getCurrentUser().name)
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
 

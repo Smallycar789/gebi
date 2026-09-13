@@ -901,6 +901,14 @@
   color: var(--color-text-secondary);
 }
 
+.profile-edit-form {
+  padding: 24px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 24px;
+}
+
 .profile-links {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

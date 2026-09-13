@@ -62,6 +62,13 @@ export default function Home() {
     <div className="home">
       <div className="dashboard">
         <section className="dashboard-main">
+          <div className="home-brand">
+            <h2 className="home-brand-title">隔壁</h2>
+            <p className="home-brand-slogan">
+              Hi!【隔壁】帮你打破距离，也帮你保持距离。
+            </p>
+          </div>
+
           <div className="join-card">
             <span className="join-badge">欢迎回来</span>
             <h1>
@@ -69,7 +76,7 @@ export default function Home() {
               <strong className="join-days">{daysJoined}</strong> 天
             </h1>
             <p className="join-desc">
-              隔壁·合租生活伙伴，让费用、排班、物品和公约都清清楚楚。
+              费用、排班、物品和公约都清清楚楚，合租更省心。
             </p>
             <div className="join-meta">
               <Link to="/room/settings" className="join-meta-link">

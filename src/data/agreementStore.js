@@ -1,8 +1,5 @@
-import {
-  agreementRules as seedRules,
-  roommates as seedRoommates,
-  currentUser,
-} from './mockData'
+import { agreementRules as seedRules, roommates as seedRoommates } from './mockData'
+import { getCurrentUser } from './userProfileStore'
 
 const STORAGE_KEY = 'gebi-agreement'
 
@@ -154,7 +151,7 @@ export function updateRule(id, { category, content }) {
   return { rule: state.rules[index] }
 }
 
-export function voteAgree(ruleId, userId = currentUser.id) {
+export function voteAgree(ruleId, userId = getCurrentUser().id) {
   const state = readState()
   const index = state.rules.findIndex((r) => r.id === String(ruleId))
   if (index === -1) return { error: '条款不存在' }
@@ -177,7 +174,7 @@ export function voteAgree(ruleId, userId = currentUser.id) {
   return { rule: updated }
 }
 
-export function signAgreement(signerId = currentUser.id) {
+export function signAgreement(signerId = getCurrentUser().id) {
   const state = readState()
   const me = state.signatures.find((s) => s.id === signerId)
   if (!me) return { error: '签署人不在合租组中' }
@@ -197,4 +194,4 @@ export function signAgreement(signerId = currentUser.id) {
   return { success: true }
 }
 
-export { currentUser, seedRoommates as roommates }
+export { getCurrentUser, seedRoommates as roommates }

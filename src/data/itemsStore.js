@@ -1,4 +1,5 @@
-import { items as seedItems, currentUser, roommates } from './mockData'
+import { items as seedItems, roommates } from './mockData'
+import { getCurrentUser } from './userProfileStore'
 
 const STORAGE_KEY = 'gebi-items'
 
@@ -104,7 +105,7 @@ export function recordConsumption(itemId, { amount, user }) {
   const nextQty = item.quantity - useAmount
   const log = {
     id: `c${Date.now()}`,
-    user: user || currentUser.name,
+    user: user || getCurrentUser().name,
     amount: useAmount,
     unit: item.unit,
     date: new Date().toISOString(),
@@ -139,4 +140,4 @@ export function getItemsSummary() {
   return { total: items.length, lowCount, monthConsumption }
 }
 
-export { roommates, currentUser }
+export { roommates, getCurrentUser }

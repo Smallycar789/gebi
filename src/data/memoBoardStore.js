@@ -1,4 +1,5 @@
-import { memos as seedMemos, currentUser } from './mockData'
+import { memos as seedMemos } from './mockData'
+import { getCurrentUser } from './userProfileStore'
 
 const STORAGE_KEY = 'gebi-memo-board'
 export const DEFAULT_BOARD_TITLE = 'AAAA景区留言板'
@@ -64,7 +65,7 @@ export function postMessage(content) {
   const state = readState()
   const message = {
     id: `m${Date.now()}`,
-    author: currentUser.name,
+    author: getCurrentUser().name,
     content: text,
     createdAt: new Date().toISOString(),
   }
