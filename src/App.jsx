@@ -7,6 +7,8 @@ import ExpenseDetail from './pages/ExpenseDetail'
 import Cleaning from './pages/Cleaning'
 import CleaningCheckin from './pages/CleaningCheckin'
 import Items from './pages/Items'
+import ItemNew from './pages/ItemNew'
+import ItemConsume from './pages/ItemConsume'
 import ItemDetail from './pages/ItemDetail'
 import Agreement from './pages/Agreement'
 import RoomSettings from './pages/RoomSettings'
@@ -23,6 +25,8 @@ export default function App() {
         <Route path="cleaning" element={<Cleaning />} />
         <Route path="cleaning/checkin" element={<CleaningCheckin />} />
         <Route path="items" element={<Items />} />
+        <Route path="items/new" element={<ItemNew />} />
+        <Route path="items/consume" element={<ItemConsume />} />
         <Route path="items/:id" element={<ItemDetail />} />
         <Route path="agreement" element={<Agreement />} />
         <Route path="room/settings" element={<RoomSettings />} />

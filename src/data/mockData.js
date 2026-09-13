@@ -170,12 +170,3 @@ export const agreementRules = [
   { id: 8, category: '钥匙管理', content: '最后出门者负责锁门，钥匙不得外借非室友人员', votes: 4 },
 ]
 
-export function getItemById(id) {
-  return items.find((i) => i.id === id)
-}
-
-export function getItemStatusLabel(status) {
-  if (status === 'empty') return '已用完'
-  if (status === 'low') return '需补货'
-  return '充足'
-}

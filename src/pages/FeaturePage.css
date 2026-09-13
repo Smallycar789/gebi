@@ -494,6 +494,12 @@
   border-radius: var(--radius);
 }
 
+.form-hint {
+  margin: -8px 0 16px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
 .toast-success {
   margin-bottom: 16px;
   padding: 12px 16px;

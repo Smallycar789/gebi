@@ -1,19 +1,28 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import ActionButton from '../components/ActionButton'
-import { items, getItemStatusLabel } from '../data/mockData'
+import { getAllItems, getItemsSummary, getItemStatusLabel } from '../data/itemsStore'
 import './FeaturePage.css'
 
 export default function Items() {
-  const lowCount = items.filter((i) => i.status === 'low' || i.status === 'empty').length
+  const location = useLocation()
+  const items = getAllItems()
+  const { lowCount, monthConsumption } = getItemsSummary()
+  const justAdded = location.state?.itemAdded
+  const consumptionRecorded = location.state?.consumptionRecorded
 
   return (
     <div className="feature-page">
+      {justAdded && (
+        <p className="toast-success" role="status">物品已登记，清单已更新</p>
+      )}
+      {consumptionRecorded && (
+        <p className="toast-success" role="status">消耗已记录，余量已更新</p>
+      )}
       <PageHeader
         icon="📦"
         title="公共物品登记"
         subtitle="登记合租共用消耗品，设置余量预警，低于阈值时自动提醒室友补货。"
-        badge="演示数据"
       />
 
       <div className="feature-layout">
@@ -29,7 +38,7 @@ export default function Items() {
             </div>
             <div className="summary-card">
               <span className="summary-label">本月消耗</span>
-              <strong className="summary-value">8 次</strong>
+              <strong className="summary-value">{monthConsumption} 次</strong>
             </div>
           </div>
 
@@ -61,9 +70,19 @@ export default function Items() {
         <aside className="feature-sidebar">
           <h3>快捷操作</h3>
           <div className="action-list">
-            <ActionButton icon="➕" label="登记物品" description="添加新的公共消耗品" disabled />
-            <ActionButton icon="📉" label="记录消耗" description="使用后扣减库存" disabled />
-            <ActionButton icon="🛒" label="补货登记" description="采购后更新库存" disabled />
+            <ActionButton
+              icon="➕"
+              label="登记物品"
+              description="添加新的公共消耗品"
+              to="/items/new"
+              variant="primary"
+            />
+            <ActionButton
+              icon="📉"
+              label="记录消耗"
+              description="使用后扣减库存"
+              to="/items/consume"
+            />
             <ActionButton icon="🔔" label="补货提醒" description="通知室友采购物品" disabled />
           </div>
         </aside>

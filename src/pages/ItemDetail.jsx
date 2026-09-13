@@ -1,13 +1,18 @@
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import BackLink from '../components/BackLink'
 import PageHeader from '../components/PageHeader'
-import { getItemById, getItemStatusLabel } from '../data/mockData'
+import { getItemById, getItemStatusLabel } from '../data/itemsStore'
 import { formatDateTime } from '../utils/date'
 import './FeaturePage.css'
 
 export default function ItemDetail() {
   const { id } = useParams()
-  const item = getItemById(id)
+  const [item, setItem] = useState(() => getItemById(id))
+
+  useEffect(() => {
+    setItem(getItemById(id))
+  }, [id])
 
   if (!item) {
     return (
