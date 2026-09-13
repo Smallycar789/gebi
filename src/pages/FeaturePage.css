@@ -454,6 +454,22 @@
   margin-bottom: 16px;
 }
 
+.detail-card-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.detail-card-toolbar h2 {
+  margin-bottom: 0;
+}
+
+.item-edit-form {
+  max-width: 560px;
+}
+
 .split-table {
   display: flex;
   flex-direction: column;

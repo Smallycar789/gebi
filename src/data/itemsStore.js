@@ -58,6 +58,34 @@ export function addItem({ name, unit, quantity, threshold }) {
   return newItem
 }
 
+export function updateItem(itemId, { name, unit, quantity, threshold }) {
+  const items = readItems()
+  const index = items.findIndex((i) => i.id === String(itemId))
+  if (index === -1) return { error: '物品不存在' }
+
+  const trimmedName = name.trim()
+  const qty = Number(quantity)
+  const thr = Number(threshold)
+
+  if (!trimmedName) return { error: '请填写物品名称' }
+  if (!Number.isFinite(qty) || qty < 0) return { error: '请填写有效的余量（0 或正数）' }
+  if (!Number.isFinite(thr) || thr < 0) return { error: '请填写有效的预警阈值（0 或正数）' }
+
+  const prev = items[index]
+  const updated = {
+    ...prev,
+    name: trimmedName,
+    unit: unit.trim() || '个',
+    quantity: qty,
+    threshold: thr,
+    status: deriveItemStatus(qty, thr),
+  }
+
+  items[index] = updated
+  writeItems(items)
+  return { item: updated }
+}
+
 export function recordConsumption(itemId, { amount, user }) {
   const items = readItems()
   const index = items.findIndex((i) => i.id === itemId)

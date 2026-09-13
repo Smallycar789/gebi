@@ -49,6 +49,7 @@ export default function Items() {
                 <Link
                   key={item.id}
                   to={`/items/${item.id}`}
+                  state={{ edit: true }}
                   className={`item-row item-row--link item-row--${item.status}`}
                 >
                   <div className="item-info">
